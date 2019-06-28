@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/jqery.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../css/gouwuche.css"/>
+	</head>
+	<body>
+		<div class="dao">
+			<ul class="zuo">
+				<li class="fang">
+					<a href="#">当前城市</a>
+				</li>
+				<li>
+					<a href="shouye.html">首页</a>
+				</li>
+				<li>
+					<a href="#">欢迎来到我买网</a>
+				</li>
+				<li>
+					<a href="denglu.html">登录</a>
+				</li>
+				<li>
+					<a href="zhuce.html">注册</a>
+				</li>
+			</ul>
+			<ul class="you">
+				<li class="zhang">
+					<a href="#">我的账户</a>
+				</li>
+				<li>
+					<a href="gouwuche.html">购物车</a>
+				</li>
+				<li class="ke1">
+					<a href="#">客服服务</a>
+					<div class="ke">
+						<a href="#">客服中心</a>
+						<a href="#">客服中心</a>
+					</div>
+				</li>
+				<li>
+					<a href="liebiao.html">列表</a>
+				</li>
+				<img src="../img/2019-06-21_201943.png">
+			</ul>
+
+		</div>
+		<div class="gouwu">
+			
+		</div>	
+		
+		<script type="text/javascript">
+			$(function(){
+				var token = localStorage.getItem("token");
+				$.get("http://47.104.244.134:8080/cartlist.do",{
+					"token":token
+				}).done(data=>{
+					
+					var str = "";
+					for(var i=0;i<data.length;i++){
+					var date = data[i].goods;
+						str +=`
+						<div class="er">
+								<li>
+									<img src="${date.picurl}">
+								</li>
+								<div class="ni">
+								<p>${date.price}</p>
+								<p>${date.id}</p>
+								<p>
+									<span class="minus">-</span>
+									<input type="text" class="num" value="1">
+									<span class="add">+</span>
+								</p>
+								<p>总价</p>
+								<p class="btn1">删除</p>
+							</div>
+						</div>`
+					}
+					$(".gouwu").html(str);
+					
+					
+					
+					
+					
+					$(".minus").click(function(){
+						var user = $(".num").val();
+						$(".num").val(user-1)
+						if($(".num").val()<=1){
+							$(".num").val(1)
+						}
+						
+					})
+					$(".add").click(function(){
+						var user = $(".num").val();
+						$(".num").val( parseInt($(".num").val())+1)
+						console.log(user)
+					})
+					
+					/*var jia = parseInt($(".num").val()*$(".li").val())
+					$(".zongjia").html()*/
+					$(".btn1").click(function(){
+						
+						$(this).parent().parent().remove()
+						
+					})
+					
+				})
+				
+			})
+			
+		</script>
+	</body>
+</html>
